@@ -1,0 +1,829 @@
+/* ==========================================================================
+   LUMEA, derde concept
+
+   Avondlicht. De gevel is 's avonds zwart met een lichtlijn erboven, en dat
+   is hier het uitgangspunt: een nachtkleurige basis, crème letters en goud
+   als enige accent. Eén crèmekleurig blok halverwege zorgt dat het geen
+   tunnel wordt. Zelfde letter als de andere twee, Jost.
+   ========================================================================== */
+
+/* --- 1. Variabelen ------------------------------------------------------ */
+
+:root {
+  --nacht: #171310;
+  --nacht-licht: #221c17;
+  --nacht-diep: #0f0c0a;
+  --creme: #f0e9dd;
+  --creme-diep: #e2d7c5;
+  --goud: #c9a567;
+  --goud-diep: #a4834a;
+  --inkt: #241d16;
+  --inkt-zacht: #6f6252;
+
+  --zacht: rgba(240, 233, 221, 0.62);
+  --flauw: rgba(240, 233, 221, 0.34);
+  --lijn: rgba(240, 233, 221, 0.16);
+  --lijn-donker: rgba(36, 29, 22, 0.16);
+
+  --sans: "Jost", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif;
+
+  --marge: clamp(1.25rem, 5vw, 4.5rem);
+  --maat: 1240px;
+  --rail: 0px;
+
+  color-scheme: dark;
+}
+
+/* Vanaf een breed scherm komt er een smalle verticale strook links */
+@media (min-width: 1100px) {
+  :root {
+    --rail: 4.25rem;
+  }
+}
+
+/* --- 2. Basis ----------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding-left: var(--rail);
+  background: var(--nacht);
+  color: var(--creme);
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 1px solid var(--goud);
+  outline-offset: 4px;
+}
+
+.binnen {
+  max-width: var(--maat);
+  margin-inline: auto;
+  padding-inline: var(--marge);
+}
+
+.verborgen {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- 3. Verticale zijrail ----------------------------------------------- */
+/* De naam staat op zijn kant tegen de linkerrand, met een gouden lijn
+   eronder. Alleen op brede schermen, want op een telefoon kost het
+   te veel breedte. */
+
+.rail {
+  display: none;
+}
+
+@media (min-width: 1100px) {
+  .rail {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 70;
+    width: var(--rail);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1.75rem;
+    background: var(--nacht-diep);
+    border-right: 1px solid var(--lijn);
+  }
+
+  .rail__naam {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.78rem;
+    font-weight: 300;
+    letter-spacing: 0.52em;
+    text-indent: 0.52em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .rail__lijn {
+    width: 1px;
+    flex: 1;
+    margin-block: 1.5rem;
+    background: linear-gradient(to bottom, var(--goud), rgba(201, 165, 103, 0));
+  }
+
+  .rail__plaats {
+    writing-mode: vertical-rl;
+    font-size: 0.56rem;
+    letter-spacing: 0.4em;
+    text-indent: 0.4em;
+    text-transform: uppercase;
+    color: var(--flauw);
+  }
+}
+
+/* --- 4. Merkteken ------------------------------------------------------- */
+
+.merk {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.merk__naam {
+  display: flex;
+  align-items: center;
+  gap: 0.85em;
+  font-size: var(--merk-maat, 1.3rem);
+  font-weight: 300;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  text-transform: uppercase;
+}
+
+.merk__naam::before,
+.merk__naam::after {
+  content: "";
+  width: var(--merk-lijn, 2em);
+  height: 1px;
+  background: var(--goud);
+}
+
+.merk__plaats {
+  margin-top: 0.8em;
+  font-size: calc(var(--merk-maat, 1.3rem) * 0.38);
+  letter-spacing: 0.44em;
+  text-indent: 0.44em;
+  text-transform: uppercase;
+  color: var(--zacht);
+}
+
+/* --- 5. Typografie ------------------------------------------------------ */
+
+h1,
+h2,
+h3 {
+  font-weight: 300;
+  line-height: 1.1;
+  margin: 0;
+}
+
+h2 {
+  font-size: clamp(1.6rem, 4vw, 2.7rem);
+  letter-spacing: 0.08em;
+}
+
+h3 {
+  font-size: clamp(1rem, 2.1vw, 1.2rem);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+.leid {
+  font-size: clamp(0.96rem, 1.6vw, 1.08rem);
+  line-height: 1.8;
+  color: var(--zacht);
+  max-width: 48ch;
+}
+
+.label {
+  display: block;
+  font-size: 0.64rem;
+  letter-spacing: 0.4em;
+  text-indent: 0.4em;
+  text-transform: uppercase;
+  color: var(--goud);
+  margin: 0 0 1.25rem;
+}
+
+.regel {
+  font-size: clamp(0.72rem, 1.4vw, 0.88rem);
+  font-weight: 300;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  text-transform: uppercase;
+  color: var(--zacht);
+}
+
+.invullen {
+  color: var(--flauw);
+  border-bottom: 1px dashed var(--goud-diep);
+  padding-bottom: 1px;
+}
+
+/* --- 6. Knoppen --------------------------------------------------------- */
+
+.knop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em 2.3em;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: var(--creme);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+.knop--goud {
+  background: var(--goud);
+  border-color: var(--goud);
+  color: var(--nacht);
+}
+
+.knop--goud:hover {
+  background: transparent;
+  color: var(--goud);
+}
+
+.knop--lijn {
+  border-color: var(--lijn);
+}
+
+.knop--lijn:hover {
+  border-color: var(--creme);
+  background: var(--creme);
+  color: var(--nacht);
+}
+
+/* --- 7. Kop ------------------------------------------------------------- */
+
+.kop {
+  position: absolute;
+  inset: 0 0 auto var(--rail);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem var(--marge);
+}
+
+.kop .merk {
+  --merk-maat: 1rem;
+  --merk-lijn: 1.2em;
+}
+
+@media (min-width: 1100px) {
+  /* De naam staat al op de rail, in de kop hoeft hij dan niet nog eens */
+  .kop .merk {
+    visibility: hidden;
+  }
+}
+
+.kop nav {
+  display: none;
+  gap: 2.2rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.26em;
+  text-indent: 0.26em;
+  text-transform: uppercase;
+}
+
+.kop nav a {
+  text-decoration: none;
+  padding-bottom: 3px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.4s ease;
+}
+
+.kop nav a:hover {
+  border-bottom-color: var(--goud);
+}
+
+.kop .knop {
+  padding: 0.68em 1.4em;
+  font-size: 0.6rem;
+}
+
+@media (min-width: 900px) {
+  .kop nav {
+    display: flex;
+  }
+}
+
+/* --- 8. Hero, volvlak beeld --------------------------------------------- */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6rem var(--marge) 0;
+  overflow: hidden;
+}
+
+.hero__foto {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+/* Het stilstaande beeld ligt eronder en is wat je ziet als de video niet
+   speelt: geen autoplay, geen bandbreedte, of bewegingsreductie aan. */
+.hero__foto img,
+.hero__foto video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__video {
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__video {
+    display: none;
+  }
+
+  .hero__stil {
+    animation: inzoomen 24s ease-out forwards;
+  }
+}
+
+@keyframes inzoomen {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Donkere sluier, zwaarder dan bij de lichte concepten omdat de tekst
+   crème is en de foto's helder zijn */
+.hero__foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Boven de video, anders ligt de sluier eronder en is de tekst
+     onleesbaar zodra de video speelt. */
+  z-index: 2;
+  background: radial-gradient(
+      120% 85% at 50% 45%,
+      rgba(23, 19, 16, 0.42) 0%,
+      rgba(23, 19, 16, 0.78) 58%,
+      rgba(23, 19, 16, 0.95) 100%
+    );
+}
+
+/* Het middenblok pakt de vrije ruimte, zodat het merkteken echt in het
+   midden van het scherm staat en niet tegen de bovenkant aan. */
+.hero__midden {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero .merk {
+  --merk-maat: clamp(1.9rem, 6.5vw, 3.8rem);
+  --merk-lijn: 2.2em;
+  margin-bottom: clamp(1.25rem, 3.5vw, 2rem);
+}
+
+.hero__regel {
+  margin: 0 0 clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.hero__knoppen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: center;
+}
+
+/* Drie korte feiten onderin de hero, zodat het eerste scherm niet uit één
+   blok bestaat */
+.hero__voet {
+  margin-top: auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--lijn);
+}
+
+.hero__voet div {
+  padding: clamp(0.9rem, 2.5vw, 1.4rem) 0.4rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  text-transform: uppercase;
+  color: var(--zacht);
+}
+
+.hero__voet div + div {
+  border-left: 1px solid var(--lijn);
+}
+
+/* Op een telefoon blijft de balk onderin over de feitenstrook heen vallen,
+   dus de hero wordt precies zoveel korter. De spatiëring gaat ook omlaag,
+   anders breken de drie regels midden in een woord af. */
+@media (max-width: 759px) {
+  .hero {
+    min-height: calc(100svh - 3.3rem);
+  }
+
+  .hero__voet div {
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+    text-indent: 0.1em;
+    line-height: 1.45;
+  }
+}
+
+/* --- 9. Secties --------------------------------------------------------- */
+
+.sectie {
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.sectie--creme {
+  background: var(--creme);
+  color: var(--inkt);
+}
+
+.sectie--creme .leid {
+  color: var(--inkt-zacht);
+}
+
+.sectie--creme .label {
+  color: var(--goud-diep);
+}
+
+.sectie__kop {
+  max-width: 54ch;
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+}
+
+/* --- 9b. Over ons ------------------------------------------------------- */
+/* Foto links, tekst rechts. Op een telefoon de foto eerst, liggend, zodat
+   het blok niet meteen een heel scherm vult. */
+
+.over {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .over {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+}
+
+.over__foto img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+@media (min-width: 900px) {
+  .over__foto img {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* --- 10. De kaart als genummerde lijst ---------------------------------- */
+/* Een getrapt raster: de middelste kolom zakt iets weg, zodat het geen
+   rij gelijke blokken wordt. Op een telefoon staan ze twee naast elkaar. */
+
+.selectie {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.8rem, 2.5vw, 1.75rem);
+}
+
+/* De derde zou op een telefoon alleen op een halve regel achterblijven */
+@media (max-width: 899px) {
+  .selectie > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .selectie > :last-child .kaart__foto img {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (min-width: 900px) {
+  .selectie {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .selectie > :nth-child(2) {
+    transform: translateY(3.25rem);
+  }
+}
+
+.kaart {
+  text-decoration: none;
+  display: block;
+}
+
+.kaart__foto {
+  position: relative;
+  overflow: hidden;
+  background: var(--nacht-licht);
+}
+
+.kaart__foto img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  filter: brightness(0.92);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.6s ease;
+}
+
+.kaart:hover .kaart__foto img {
+  transform: scale(1.05);
+  filter: brightness(1);
+}
+
+/* Het nummer ligt over de hoek van de foto */
+.kaart__nr {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.5rem 0.85rem;
+  background: var(--nacht);
+  color: var(--goud);
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+}
+
+.kaart h3 {
+  margin: 1rem 0 0.35rem;
+}
+
+.kaart p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--zacht);
+}
+
+.selectie__onder {
+  margin-top: clamp(2.25rem, 6vw, 5.5rem);
+  text-align: center;
+}
+
+/* --- 11. Credo op crème ------------------------------------------------- */
+/* Eén uitspraak, gecentreerd tussen twee gouden lijntjes. Dit blok is de
+   adempauze in een verder donkere pagina, dus hoe minder erin staat, hoe
+   beter het werkt. */
+
+.credo {
+  max-width: 26ch;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.credo__lijn {
+  width: 3rem;
+  height: 1px;
+  background: var(--goud-diep);
+  border: 0;
+  margin: 0 auto clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.credo h2 {
+  font-size: clamp(1.5rem, 4.4vw, 2.5rem);
+  line-height: 1.28;
+  letter-spacing: 0.03em;
+}
+
+.credo p {
+  margin: clamp(1.5rem, 4vw, 2.25rem) 0 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  text-transform: uppercase;
+  line-height: 2;
+  color: var(--inkt-zacht);
+}
+
+.credo__lijn--onder {
+  margin: clamp(1.5rem, 4vw, 2.25rem) auto 0;
+}
+
+/* --- 12. Bezoek --------------------------------------------------------- */
+
+.bezoek {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .bezoek {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+}
+
+.bezoek__foto img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.gegevens {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.25rem, 3vw, 2rem);
+  margin-top: clamp(1.5rem, 4vw, 2rem);
+}
+
+.gegevens h3 {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  color: var(--goud);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--lijn);
+}
+
+.tijden {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+.tijden li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.3rem 0;
+  color: var(--zacht);
+}
+
+.gegevens address {
+  font-style: normal;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--zacht);
+}
+
+/* --- 13. Voettekst ------------------------------------------------------ */
+
+.voet {
+  background: var(--nacht-diep);
+  color: var(--flauw);
+  padding: clamp(2.5rem, 6vw, 3.5rem) 0 calc(clamp(2rem, 5vw, 2.75rem) + env(safe-area-inset-bottom));
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+.voet .merk {
+  --merk-maat: 1.25rem;
+  color: var(--creme);
+  margin-bottom: 1.5rem;
+}
+
+.voet__regel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 1.75rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--lijn);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+/* --- 14. Vaste balk onderin, alleen op een telefoon --------------------- */
+
+.balk {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 70;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--nacht-diep);
+  border-top: 1px solid var(--lijn);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.balk a {
+  padding: 1rem 0.5rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--creme);
+  font-size: 0.64rem;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  text-transform: uppercase;
+}
+
+.balk a + a {
+  border-left: 1px solid var(--lijn);
+}
+
+@media (min-width: 760px) {
+  .balk {
+    display: none;
+  }
+}
+
+body:has(.balk) {
+  padding-bottom: 3.3rem;
+}
+
+@media (min-width: 760px) {
+  body:has(.balk) {
+    padding-bottom: 0;
+  }
+}
+
+/* --- 15. Invloeien ------------------------------------------------------ */
+
+/* Alleen verbergen zolang het script draait. Draait het niet, dan is de
+   tekst gewoon zichtbaar in plaats van onzichtbaar. */
+.js-aan .komt-op {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js-aan .komt-op.erin {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js-aan .komt-op {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero__foto img {
+    animation: none;
+  }
+
+  .kaart:hover .kaart__foto img {
+    transform: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

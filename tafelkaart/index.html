@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tafelkaartje met QR · LUMEA Amsterdam</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/stijl.css">
+<style>
+  /* Deze pagina is niet bedoeld om te bekijken maar om af te drukken:
+     twee kaartjes op een A4 liggend, langs de snijlijn doormidden. */
+  .vel {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1rem, 4vw, 2.5rem);
+    max-width: 880px;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 720px) {
+    .vel { grid-template-columns: 1fr 1fr; }
+  }
+
+  .kaartje {
+    background: var(--beige-licht);
+    border: 1px solid var(--lijn);
+    padding: clamp(1.75rem, 5vw, 2.5rem);
+    text-align: center;
+    aspect-ratio: 105 / 148;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .kaartje .merk { --merk-maat: 1.5rem; }
+
+  .kaartje img {
+    width: min(60%, 200px);
+    height: auto;
+  }
+
+  .kaartje h2 {
+    font-size: 1rem;
+    margin-bottom: .75rem;
+  }
+
+  .kaartje p {
+    font-size: .74rem;
+    line-height: 1.7;
+    color: var(--inkt-zacht);
+    margin: 0 auto;
+    max-width: 26ch;
+  }
+
+  .uitleg {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: clamp(1rem, 4vw, 2.5rem);
+    font-size: .88rem;
+    color: var(--inkt-zacht);
+  }
+
+  @media print {
+    .uitleg { display: none; }
+    .vel { padding: 0; gap: 0; max-width: none; grid-template-columns: 1fr 1fr; }
+    .kaartje { border: 1px dashed #c4bbad; }
+    @page { size: A4 landscape; margin: 10mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="uitleg">
+  <p><strong>Tafelkaartje.</strong> Druk deze pagina af op A4 liggend en snijd hem doormidden, dan hebt u twee kaartjes van ongeveer A6. De code verwijst naar de kaart op <code>/menu/</code>. Verandert het webadres, dan moet de QR opnieuw gemaakt worden.</p>
+</div>
+
+<div class="vel">
+
+  <div class="kaartje">
+    <span class="merk">
+      <span class="merk__naam">Lumea</span>
+      <span class="merk__plaats">Amsterdam</span>
+    </span>
+    <img src="../assets/qr/qr-menu.svg" alt="QR-code naar de kaart">
+    <div>
+      <h2>De kaart</h2>
+      <p>Richt de camera van uw telefoon op de code. De kaart opent vanzelf, met een foto bij elk gerecht.</p>
+    </div>
+  </div>
+
+  <div class="kaartje">
+    <span class="merk">
+      <span class="merk__naam">Lumea</span>
+      <span class="merk__plaats">Amsterdam</span>
+    </span>
+    <img src="../assets/qr/qr-menu.svg" alt="QR-code naar de kaart">
+    <div>
+      <h2>De kaart</h2>
+      <p>Richt de camera van uw telefoon op de code. De kaart opent vanzelf, met een foto bij elk gerecht.</p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
